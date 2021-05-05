@@ -11,6 +11,8 @@
 * Farklı tipte kullanıcı kaydı olanağı sunuldu ve kimlik doğrulamasına uygun kullanıcı tipi ayarlanabilmesi için MernisValidatable interface'i oluşturuldu. Gamer kullanıcı sınıfı, aynı zamanda bu interface'in bir implementasyonu.
 * User - Gamer sınıf tanımlamaları ile inheritance kavramına örnek oluşturulmaya çalışıldı. Ancak bazı işlemler yeterince uygun hale getirillemedi. Daha doğru ve sağlıklı kullanım için Code refactoring gerekecektir.
 
+<img src="https://github.com/barisertugrul/JavaCamp-GameCenterProject/blob/master/images/java_game_center_output.png"/>
+
 
 <a href="https://github.com/barisertugrul/JavaCamp-GameCenterProject">
   <img align="center" src="https://github-readme-stats.vercel.app/api/pin/?username=barisertugrul&show_owner=true&custom_title=Odevler&theme=vision-friendly-dark&repo=JavaCamp-GameCenterProject" />
