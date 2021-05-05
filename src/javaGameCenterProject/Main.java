@@ -1,6 +1,8 @@
 package javaGameCenterProject;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javaGameCenterProject.Abstract.BaseUserManager;
@@ -26,8 +28,19 @@ import javaGameCenterProject.Entities.User;
 
 public class Main {
 
-	public static void main(String[] args) {
+		public static final String ANSI_RESET = "\u001B[0m";
+		public static final String ANSI_BLACK = "\u001B[30m";
+		public static final String ANSI_RED = "\u001B[31m";
+		public static final String ANSI_GREEN = "\u001B[32m";
+		public static final String ANSI_YELLOW = "\u001B[33m";
+		public static final String ANSI_BLUE = "\u001B[34m";
+		public static final String ANSI_PURPLE = "\u001B[35m";
+		public static final String ANSI_CYAN = "\u001B[36m";
+		public static final String ANSI_WHITE = "\u001B[37m";
 		
+	public static void main(String[] args) {
+		//Sistem baþlatýlýyor
+				System.out.println("\n\n========================= Java Camp Game Store =========================\n");
 		//Startup settings - ServiceFactory denemesi
 		ServiceFactoryManager serviceFactoryManager = new ServiceFactoryManager();
 		serviceFactoryManager.release(new CampaignDbManager());
@@ -98,20 +111,40 @@ public class Main {
 		gamerManager.register(gamer3);
 		
 		//Tüm kullanýcýlarýn listelenmesi
-		System.out.println("\n========================= Users =========================");
+		System.out.println("\n*********************************************************");
+		System.out.println("========================= Users =========================");
+		System.out.println("*********************************************************\n");
+		
+		System.out.format("%6s%13s%30s%35s", "No", "Kayýt Tarihi", "Ýsim-Soyisim", "E-Posta Adresi\n");
+		System.out.format("%6s%13s%30s%35s", "--", "------------", "------------", "--------------\n");
 		BaseUserManager baseUserManager = new BaseUserManager(new UserDbManager());
 		List<User> users = baseUserManager.getAllUsers();
 		for (User user : users) {
-			System.out.println(user.getId() + " - " + user.getRegisterDate());
+			Gamer gamer = gamerManager.getByUserId(user.getId());
+		
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+			String regDateString = dtf.format(user.getRegisterDate());
+
+			System.out.format("%6s%13s%30s%35s", user.getId(), regDateString, gamer.getFirstName() + " " + gamer.getLastName(), user.getEmail() + "\n");
+			
 		}
 		
 
 		//Tüm oyuncularýn listelenmesi
-		System.out.println("\n========================= Gamers =========================");
+		System.out.println("\n**********************************************************");
+		System.out.println("========================= Gamers =========================");
+		System.out.println("**********************************************************\n");
+		
+		System.out.format("%6s%13s%13s%30s%35s", "No", "TC Kimlik No", "Doðum Tarihi", "Ýsim-Soyisim", "E-Posta Adresi\n");
+		System.out.format("%6s%13s%13s%30s%35s", "--", "------------", "------------", "------------", "--------------\n");
 		GamerManager gamerManager2 = new GamerManager(serviceFactoryManager);
 		List<Gamer> gamers = gamerManager2.getAll();
 		for (Gamer gamer : gamers) {
-			System.out.println(gamer.getId() + " - " + gamer.getFirstName() + gamer.getLastName());
+
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+			String dateOfBirth = dtf.format(gamer.getDateOfBirth());
+			
+			System.out.format("%6s%13s%13s%30s%35s",gamer.getId(), gamer.getNationalityId(), dateOfBirth, gamer.getFirstName() + " " + gamer.getLastName(), gamer.getEmail() +"\n" );
 		}
 		
 		//Sipariþ

@@ -59,4 +59,15 @@ public class GamerDbManager implements GamerDbService {
 		return null;
 	}
 
+	@Override
+	public Gamer getByUserId(int userId) {
+		List<Gamer> gamers = Database.getGamers();
+		for (Gamer gamerItem : gamers) {
+			if (gamerItem.getUserId() == userId) {
+				return gamerItem;
+			}
+		}
+		return null;
+	}
+
 }

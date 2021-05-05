@@ -67,4 +67,9 @@ public class GamerManager extends BaseUserManager{
 	public Gamer getById(int id) {
 		return _gamerDb.getById(id);
 	}
+
+
+	public Gamer getByUserId(int userId) {
+		return _gamerDb.getByUserId(userId);
+	}
 }

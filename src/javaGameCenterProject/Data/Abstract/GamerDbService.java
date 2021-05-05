@@ -10,4 +10,5 @@ public interface GamerDbService {
 	boolean delete(Gamer gamer);
 	List<Gamer> getAll();
 	Gamer getById(int id);
+	Gamer getByUserId(int userId);
 }
