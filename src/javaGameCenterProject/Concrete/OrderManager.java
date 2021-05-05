@@ -3,6 +3,7 @@ package javaGameCenterProject.Concrete;
 import java.time.LocalDate;
 import java.util.List;
 
+import javaGameCenterProject.ConsoleColors;
 import javaGameCenterProject.Abstract.CampaignService;
 import javaGameCenterProject.Abstract.GameService;
 import javaGameCenterProject.Abstract.OrderService;
@@ -69,12 +70,12 @@ public class OrderManager implements OrderService {
 				Game game = _gameManager.getById(detail.getGameId());
 				amount += detail.getQuantity() * game.getUnitPrice();
 			}
-			System.out.println("Sipariþiniz alýndý. Onay bekliyor.");
+			System.out.println("Sipariþiniz alýndý. Onay bekliyor.\n");
 			int campaignId = cart.getCampaignId();
 			if(campaignId > 0) {
 				double discount = _campaignManager.calculateDiscount(campaignId, amount);
-				System.out.println(_campaignManager.getById(campaignId).getCampaignName() + 
-						" adlý kampanyadan yararlandýnýz ve " + discount + " TL indirim kazandýnýz.");
+				System.out.println(ConsoleColors.RED_BRIGHT + _campaignManager.getById(campaignId).getCampaignName() + ConsoleColors.RESET + 
+						" adlý kampanyadan yararlandýnýz ve " + ConsoleColors.RED_BRIGHT + discount + ConsoleColors.RESET + " TL indirim kazandýnýz.");
 			}
 		}
 	}

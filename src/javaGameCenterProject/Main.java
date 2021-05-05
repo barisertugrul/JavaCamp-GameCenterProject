@@ -27,20 +27,11 @@ import javaGameCenterProject.Entities.OrderDetail;
 import javaGameCenterProject.Entities.User;
 
 public class Main {
-
-		public static final String ANSI_RESET = "\u001B[0m";
-		public static final String ANSI_BLACK = "\u001B[30m";
-		public static final String ANSI_RED = "\u001B[31m";
-		public static final String ANSI_GREEN = "\u001B[32m";
-		public static final String ANSI_YELLOW = "\u001B[33m";
-		public static final String ANSI_BLUE = "\u001B[34m";
-		public static final String ANSI_PURPLE = "\u001B[35m";
-		public static final String ANSI_CYAN = "\u001B[36m";
-		public static final String ANSI_WHITE = "\u001B[37m";
 		
 	public static void main(String[] args) {
 		//Sistem baþlatýlýyor
-				System.out.println("\n\n========================= Java Camp Game Store =========================\n");
+		System.out.println("\n\n========================= Java Camp Game Store =========================\n");
+		
 		//Startup settings - ServiceFactory denemesi
 		ServiceFactoryManager serviceFactoryManager = new ServiceFactoryManager();
 		serviceFactoryManager.release(new CampaignDbManager());
@@ -69,7 +60,7 @@ public class Main {
 				"12345",
         		"Barýþ",
         		"Ertuðrul",
-        		"012345678910",
+        		"12345678910",
         		LocalDate.of(1977, 01, 01)
         		);
         
@@ -111,12 +102,12 @@ public class Main {
 		gamerManager.register(gamer3);
 		
 		//Tüm kullanýcýlarýn listelenmesi
-		System.out.println("\n*********************************************************");
-		System.out.println("========================= Users =========================");
-		System.out.println("*********************************************************\n");
+		System.out.println(ConsoleColors.PURPLE_BRIGHT + "\n****************************************************************************************" + ConsoleColors.RESET);
+		System.out.println("======================================== Users =========================================");
+		System.out.println(ConsoleColors.PURPLE_BRIGHT + "****************************************************************************************\n" + ConsoleColors.RESET);
 		
-		System.out.format("%6s%13s%30s%35s", "No", "Kayýt Tarihi", "Ýsim-Soyisim", "E-Posta Adresi\n");
-		System.out.format("%6s%13s%30s%35s", "--", "------------", "------------", "--------------\n");
+		System.out.format(ConsoleColors.CYAN_UNDERLINED + "%6s%13s%30s%45s", "No    ", "Kayýt Tarihi ", "Ýsim-Soyisim     ", "E-Posta Adresi     \n" + ConsoleColors.RESET);
+		//System.out.format("%6s%13s%30s%45s", "--", "------------", "------------", "--------------\n");
 		BaseUserManager baseUserManager = new BaseUserManager(new UserDbManager());
 		List<User> users = baseUserManager.getAllUsers();
 		for (User user : users) {
@@ -125,18 +116,18 @@ public class Main {
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 			String regDateString = dtf.format(user.getRegisterDate());
 
-			System.out.format("%6s%13s%30s%35s", user.getId(), regDateString, gamer.getFirstName() + " " + gamer.getLastName(), user.getEmail() + "\n");
+			System.out.format("%6s%13s%30s%45s", ConsoleColors.GREEN_BRIGHT + user.getId(), regDateString, gamer.getFirstName() + " " + gamer.getLastName(), user.getEmail() + "\n" + ConsoleColors.RESET);
 			
 		}
 		
 
 		//Tüm oyuncularýn listelenmesi
-		System.out.println("\n**********************************************************");
-		System.out.println("========================= Gamers =========================");
-		System.out.println("**********************************************************\n");
+		System.out.println(ConsoleColors.PURPLE_BRIGHT + "\n****************************************************************************************" + ConsoleColors.RESET);
+		System.out.println("======================================== Gamers ========================================");
+		System.out.println(ConsoleColors.PURPLE_BRIGHT + "****************************************************************************************\n" + ConsoleColors.RESET);
 		
-		System.out.format("%6s%13s%13s%30s%35s", "No", "TC Kimlik No", "Doðum Tarihi", "Ýsim-Soyisim", "E-Posta Adresi\n");
-		System.out.format("%6s%13s%13s%30s%35s", "--", "------------", "------------", "------------", "--------------\n");
+		System.out.format(ConsoleColors.CYAN_UNDERLINED + "%6s%16s%13s%30s%45s", "No    ", "TC Kimlik No    ", "Doðum Tarihi ", "Ýsim-Soyisim     ", "E-Posta Adresi     " + ConsoleColors.RESET + "\n");
+		//System.out.format("%6s%13s%13s%30s%45s", "--", "------------", "------------", "------------", "--------------\n");
 		GamerManager gamerManager2 = new GamerManager(serviceFactoryManager);
 		List<Gamer> gamers = gamerManager2.getAll();
 		for (Gamer gamer : gamers) {
@@ -144,7 +135,7 @@ public class Main {
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 			String dateOfBirth = dtf.format(gamer.getDateOfBirth());
 			
-			System.out.format("%6s%13s%13s%30s%35s",gamer.getId(), gamer.getNationalityId(), dateOfBirth, gamer.getFirstName() + " " + gamer.getLastName(), gamer.getEmail() +"\n" );
+			System.out.format("%6s%16s%13s%30s%45s", ConsoleColors.GREEN_BRIGHT + gamer.getId(), gamer.getNationalityId(), dateOfBirth, gamer.getFirstName() + " " + gamer.getLastName(), gamer.getEmail() +"\n" + ConsoleColors.RESET );
 		}
 		
 		//Sipariþ
