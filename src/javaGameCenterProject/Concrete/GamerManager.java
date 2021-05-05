@@ -3,6 +3,7 @@ package javaGameCenterProject.Concrete;
 import java.util.List;
 
 import javaGameCenterProject.Abstract.BaseUserManager;
+import javaGameCenterProject.Abstract.ServiceFactory;
 import javaGameCenterProject.Abstract.UserValidationService;
 import javaGameCenterProject.Data.Abstract.GamerDbService;
 import javaGameCenterProject.Data.Abstract.UserDbService;
@@ -14,10 +15,11 @@ public class GamerManager extends BaseUserManager{
 	GamerDbService _gamerDb;
 	UserValidationService _userValidationService;
 	
-	public GamerManager(UserDbService userDb, GamerDbService gamerDb, UserValidationService userValidationService) {
-		super(userDb);
-		_gamerDb = gamerDb;
-		_userValidationService = userValidationService;
+	//public GamerManager(UserDbService userDb, GamerDbService gamerDb, UserValidationService userValidationService) {
+	public GamerManager(ServiceFactory serviceFactory) {
+		super(serviceFactory.createUserDbService());
+		_gamerDb = serviceFactory.createGamerDbService();
+		_userValidationService = serviceFactory.createUserValidationService();
 	}
 
 	public int register(Gamer gamer) {

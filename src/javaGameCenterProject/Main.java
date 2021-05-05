@@ -10,9 +10,11 @@ import javaGameCenterProject.Adapters.UserValidation;
 import javaGameCenterProject.Concrete.CampaignManager;
 import javaGameCenterProject.Concrete.GameManager;
 import javaGameCenterProject.Concrete.GamerManager;
+import javaGameCenterProject.Concrete.ServiceFactoryManager;
 import javaGameCenterProject.Data.Concrete.CampaignDbManager;
 import javaGameCenterProject.Data.Concrete.GameDbManager;
 import javaGameCenterProject.Data.Concrete.GamerDbManager;
+import javaGameCenterProject.Data.Concrete.OrderDbManager;
 import javaGameCenterProject.Data.Concrete.UserDbManager;
 import javaGameCenterProject.Entities.Campaign;
 import javaGameCenterProject.Entities.Game;
@@ -22,6 +24,15 @@ import javaGameCenterProject.Entities.User;
 public class Main {
 
 	public static void main(String[] args) {
+		
+		//Startup settings - ServiceFactory denemesi
+		ServiceFactoryManager serviceFactoryManager = new ServiceFactoryManager();
+		serviceFactoryManager.release(new CampaignDbManager());
+		serviceFactoryManager.release(new GameDbManager());
+		serviceFactoryManager.release(new GamerDbManager());
+		serviceFactoryManager.release(new OrderDbManager());
+		serviceFactoryManager.release(new UserDbManager());
+		serviceFactoryManager.release(new MernisServiceAdapter());
 		
 		//Add game
 		Game game = new Game(1, "Uçan Kodcular Java Edition", "v1.0", LocalDate.now(),25.0,35);
@@ -66,15 +77,17 @@ public class Main {
         		);
         
 		//Gerçek MERNÝS Kontrollü Kayýt
-		GamerManager gamerManager = new GamerManager(new UserDbManager(),new GamerDbManager(), new MernisServiceAdapter());
+		GamerManager gamerManager = new GamerManager(serviceFactoryManager);
 		gamerManager.register(gamer1);
 
 		//Sadece TCKN Algoritma Kontrollü Kayýt
-		gamerManager = new GamerManager(new UserDbManager(),new GamerDbManager(), new TCKNValidatation());
+		serviceFactoryManager.release(new TCKNValidatation());
+		gamerManager = new GamerManager(serviceFactoryManager);
 		gamerManager.register(gamer2);
 
 		//Sahte Kontrollü Kayýt - Response True
-		gamerManager = new GamerManager(new UserDbManager(),new GamerDbManager(), new UserValidation());
+		serviceFactoryManager.release(new UserValidation());
+		gamerManager = new GamerManager(serviceFactoryManager);
 		gamerManager.register(gamer1);
 		gamerManager.register(gamer2);
 		gamerManager.register(gamer3);
@@ -90,7 +103,7 @@ public class Main {
 
 		//Tüm oyuncularýn listelenmesi
 		System.out.println("\n========================= Gamers =========================");
-		GamerManager gamerManager2 = new GamerManager(new UserDbManager(), new GamerDbManager(), new MernisServiceAdapter());
+		GamerManager gamerManager2 = new GamerManager(serviceFactoryManager);
 		List<Gamer> gamers = gamerManager2.getAll();
 		for (Gamer gamer : gamers) {
 			System.out.println(gamer.getId() + " - " + gamer.getFirstName() + gamer.getLastName());
