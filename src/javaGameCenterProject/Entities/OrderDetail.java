@@ -6,16 +6,19 @@ public class OrderDetail implements Entity {
 	private int id;
 	private int orderId;
 	private int gameId;
-	private int campaignId;
 	private int quantity;
 	private boolean orderConfirmation;
 	
-	public OrderDetail(int orderId, int gameId, int campaignId, int quantity) {
+	public OrderDetail(int gameId, int quantity) {
 		
-		this.orderId = orderId;
 		this.gameId = gameId;
-		this.campaignId = campaignId;
 		this.quantity = quantity;
+	}
+	
+	public OrderDetail(int orderId, int gameId, int quantity) {
+		
+		this(gameId, quantity);
+		this.orderId = orderId;
 	}
 
 	public int getId() {
@@ -40,14 +43,6 @@ public class OrderDetail implements Entity {
 
 	public void setGameId(int gameId) {
 		this.gameId = gameId;
-	}
-
-	public int getCampaignId() {
-		return campaignId;
-	}
-
-	public void setCampaignId(int campaignId) {
-		this.campaignId = campaignId;
 	}
 
 	public int getQuantity() {

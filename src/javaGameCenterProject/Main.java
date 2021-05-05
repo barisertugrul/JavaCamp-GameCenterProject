@@ -10,6 +10,7 @@ import javaGameCenterProject.Adapters.UserValidation;
 import javaGameCenterProject.Concrete.CampaignManager;
 import javaGameCenterProject.Concrete.GameManager;
 import javaGameCenterProject.Concrete.GamerManager;
+import javaGameCenterProject.Concrete.OrderManager;
 import javaGameCenterProject.Concrete.ServiceFactoryManager;
 import javaGameCenterProject.Data.Concrete.CampaignDbManager;
 import javaGameCenterProject.Data.Concrete.GameDbManager;
@@ -17,8 +18,10 @@ import javaGameCenterProject.Data.Concrete.GamerDbManager;
 import javaGameCenterProject.Data.Concrete.OrderDbManager;
 import javaGameCenterProject.Data.Concrete.UserDbManager;
 import javaGameCenterProject.Entities.Campaign;
+import javaGameCenterProject.Entities.Cart;
 import javaGameCenterProject.Entities.Game;
 import javaGameCenterProject.Entities.Gamer;
+import javaGameCenterProject.Entities.OrderDetail;
 import javaGameCenterProject.Entities.User;
 
 public class Main {
@@ -33,15 +36,17 @@ public class Main {
 		serviceFactoryManager.release(new OrderDbManager());
 		serviceFactoryManager.release(new UserDbManager());
 		serviceFactoryManager.release(new MernisServiceAdapter());
+		serviceFactoryManager.release(new GameManager(serviceFactoryManager));
+		serviceFactoryManager.release(new CampaignManager(serviceFactoryManager));
 		
 		//Add game
 		Game game = new Game(1, "Uçan Kodcular Java Edition", "v1.0", LocalDate.now(),25.0,35);
-		GameManager gameManager = new GameManager(new GameDbManager());
+		GameManager gameManager = new GameManager(serviceFactoryManager);
 		gameManager.add(game);
 		
 		//Add campaign
 		Campaign campaign = new Campaign("Csharpçýdan Javacýya Zeytin Dalý", LocalDate.now(), LocalDate.of(2021, 8, 30), "Java Geliþtiricilerine Csharpçý masasýndan indirim tabaðý", 0.3);
-		CampaignManager campaignManager = new CampaignManager(new CampaignDbManager());
+		CampaignManager campaignManager = new CampaignManager(serviceFactoryManager);
 		campaignManager.add(campaign);
 		
 		//Add gamer
@@ -108,6 +113,15 @@ public class Main {
 		for (Gamer gamer : gamers) {
 			System.out.println(gamer.getId() + " - " + gamer.getFirstName() + gamer.getLastName());
 		}
+		
+		//Sipariþ
+		OrderDetail orderDetail1 = new OrderDetail(1, 2);
+		OrderDetail orderDetail2 = new OrderDetail(1, 3);
+		Cart cart = new Cart(1, 1, new OrderDetail[]{orderDetail1,orderDetail2});
+
+		System.out.println("\n========================= Sipariþ Ýþlemi =========================");
+		OrderManager orderManager = new OrderManager(serviceFactoryManager);
+		orderManager.purchase(cart);
 		
 		//Güncelleme
 		System.out.println("\n========================= Update Gamer =========================");

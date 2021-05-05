@@ -5,8 +5,10 @@ import javaGameCenterProject.Data.Abstract.GameDbService;
 import javaGameCenterProject.Data.Abstract.GamerDbService;
 import javaGameCenterProject.Data.Abstract.OrderDbService;
 import javaGameCenterProject.Data.Abstract.UserDbService;
+import javaGameCenterProject.Data.Concrete.UserDbManager;
 
 public interface ServiceFactory {
+
 	UserDbService createUserDbService();
     void release(UserDbService userDbService);
 
@@ -24,4 +26,10 @@ public interface ServiceFactory {
     
     UserValidationService createUserValidationService();
     void release(UserValidationService userValidationService);
+    
+    CampaignService createCampaignService();
+    void release(CampaignService campaignService);
+    
+    GameService createGameService();
+    void release(GameService gameService);
 }

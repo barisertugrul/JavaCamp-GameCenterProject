@@ -1,5 +1,10 @@
 package javaGameCenterProject.Concrete;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
+import javaGameCenterProject.Abstract.CampaignService;
+import javaGameCenterProject.Abstract.GameService;
 import javaGameCenterProject.Abstract.ServiceFactory;
 import javaGameCenterProject.Abstract.UserValidationService;
 import javaGameCenterProject.Adapters.MernisServiceAdapter;
@@ -21,6 +26,8 @@ public class ServiceFactoryManager implements ServiceFactory {
 	CampaignDbService _campaignDbService;
 	OrderDbService _orderDbService;
 	UserValidationService _userValidationService;
+	CampaignService _campaignService;
+	GameService _gameService;
 	
 	/*
 	 * veya bu sýnýfý bir configürasyon sýnýfý olarak kabul edersek; 
@@ -30,8 +37,11 @@ public class ServiceFactoryManager implements ServiceFactory {
 	 * CampaignDbService _campaignDbService = new CampaignDbManager();
 	 * OrderDbService _orderDbService = new OrderDbManager(); 
 	 * UserValidationService _userValidationService = new MernisServiceAdapter();
+	 * CampaignService _campaignService = new CampaignManager();
+	 * GameService _gameService = new GameManager();
 	 */
-	
+
+
 	@Override
 	public UserDbService createUserDbService() {
 		return _userDbService;
@@ -95,6 +105,28 @@ public class ServiceFactoryManager implements ServiceFactory {
 	@Override
 	public void release(UserValidationService userValidationService) {
 		_userValidationService = userValidationService;
+		
+	}
+
+	@Override
+	public CampaignService createCampaignService() {
+		return _campaignService;
+	}
+
+	@Override
+	public void release(CampaignService campaignService) {
+		_campaignService = campaignService;
+		
+	}
+
+	@Override
+	public GameService createGameService() {
+		return _gameService;
+	}
+
+	@Override
+	public void release(GameService gameService) {
+		_gameService = gameService;
 		
 	}
 

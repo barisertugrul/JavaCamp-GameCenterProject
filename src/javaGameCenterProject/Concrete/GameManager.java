@@ -3,6 +3,7 @@ package javaGameCenterProject.Concrete;
 import java.util.List;
 
 import javaGameCenterProject.Abstract.GameService;
+import javaGameCenterProject.Abstract.ServiceFactory;
 import javaGameCenterProject.Data.Abstract.GameDbService;
 import javaGameCenterProject.Entities.Game;
 
@@ -10,9 +11,9 @@ public class GameManager implements GameService {
 	
 	GameDbService _gamedb;
 
-	public GameManager(GameDbService gamedb) {
+	public GameManager(ServiceFactory serviceFactory) {
 		super();
-		this._gamedb = gamedb;
+		this._gamedb = serviceFactory.createGameDbService();
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import java.util.List;
 import javaGameCenterProject.Abstract.CampaignService;
 import javaGameCenterProject.Abstract.GameService;
 import javaGameCenterProject.Abstract.OrderService;
+import javaGameCenterProject.Abstract.ServiceFactory;
 import javaGameCenterProject.Data.Abstract.OrderDbService;
 import javaGameCenterProject.Entities.Cart;
 import javaGameCenterProject.Entities.Game;
@@ -18,10 +19,10 @@ public class OrderManager implements OrderService {
 	CampaignService _campaignManager;
 	GameService _gameManager;
 
-	public OrderManager(OrderDbService orderdb, CampaignService campaignManager, GameService gameManager) {
-		_orderdb = orderdb;
-		_campaignManager = campaignManager;
-		_gameManager = gameManager;
+	public OrderManager(ServiceFactory serviceFactory) {
+		_orderdb = serviceFactory.createOrderDbService();
+		_campaignManager = serviceFactory.createCampaignService();
+		_gameManager = serviceFactory.createGameService();
 	}
 
 	@Override

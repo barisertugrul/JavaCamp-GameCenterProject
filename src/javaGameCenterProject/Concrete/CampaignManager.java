@@ -3,6 +3,7 @@ package javaGameCenterProject.Concrete;
 import java.util.List;
 
 import javaGameCenterProject.Abstract.CampaignService;
+import javaGameCenterProject.Abstract.ServiceFactory;
 import javaGameCenterProject.Data.Abstract.CampaignDbService;
 import javaGameCenterProject.Entities.Campaign;
 
@@ -10,8 +11,8 @@ public class CampaignManager implements CampaignService {
 	
 	CampaignDbService _campaignDb;
 
-	public CampaignManager(CampaignDbService campaignDb) {
-		this._campaignDb = campaignDb;
+	public CampaignManager(ServiceFactory serviceFactory) {
+		this._campaignDb = serviceFactory.createCampaignDbService();
 	}
 
 	@Override
